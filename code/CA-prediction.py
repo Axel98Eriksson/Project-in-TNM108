@@ -1,8 +1,8 @@
+import joblib
 from matplotlib.pyplot import plot
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
-from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
@@ -11,7 +11,7 @@ from sklearn.preprocessing import LabelEncoder
 
 
 # Load HTML data
-data = pd.read_html(r'data\train\longlist.html', header=0, encoding='utf-8', keep_default_na=False)
+data = pd.read_html(r'data\train\train-model-v0.html', header=0, encoding='utf-8', keep_default_na=False)
 
 # Assuming the first table in the HTML file is the one you want to use
 # If there are multiple tables, you may need to inspect and select the correct one
@@ -21,9 +21,8 @@ data = data[0]
 player_names = data['Name']
 
 # Drop player names and info from the features
-#data = data.drop(['Inf','Name'], axis=1)
 #data = data.drop(['Inf','Name','Det','Fla','Agg'], axis=1)
-data = data.drop(['Inf','Name','Agg'], axis=1)
+data = data.drop(['Inf','Name'], axis=1)
 
 #Change text to numeric values
 labelEncoder = LabelEncoder()
@@ -42,7 +41,7 @@ X = data.drop('CA', axis=1)
 scaler = StandardScaler()
 data_scaled = scaler.fit_transform(X)
 
-X_train, X_test, y_train, y_test = train_test_split(data_scaled, y, test_size=0.2, random_state=42)
+X_train, X_test, y_train, y_test = train_test_split(data_scaled, y, test_size=0.75, random_state=42)
 
 # Create and fit the linear regression model
 model = LinearRegression(fit_intercept=True)
@@ -63,8 +62,11 @@ print(f'R-squared: {r2}')
 # Scatter plot of actual vs. predicted values
 line = np.linspace(0,200)
 plt.plot(line,line, color = 'red')
-plt.scatter(y_test, y_pred, alpha=0.2)
+plt.scatter(y_test, y_pred, alpha=0.2, color="white", edgecolors="blue")
 plt.title('Actual vs. Predicted Current Ability')
 plt.xlabel('Actual CA')
 plt.ylabel('Predicted CA')
 plt.show()
+
+#save the model for experimentation
+joblib.dump(model, r'data\models\v02.joblib')
