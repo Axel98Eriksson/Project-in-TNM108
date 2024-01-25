@@ -42,6 +42,7 @@ result = pd.concat([player_names, potential_signings], axis=1)
 result['Actual CA'] = CA
 result['CA diff'] = abs(result['Actual CA']-result['CA'])
 
+
 result_sorted = result.sort_values(by='Actual CA', ascending=False)
 
 # Display the top 5 rows

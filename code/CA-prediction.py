@@ -30,9 +30,9 @@ class GaussianFeatures(BaseEstimator, TransformerMixin):
     def transform(self, X):
         return self._gauss_basis(X[:, :, np.newaxis], self.centers_, self.width_, axis=1)
 
-gauss_model = make_pipeline(GaussianFeatures(20),LinearRegression())
-gauss_model.fit(x[:, np.newaxis], y)
-yfit = gauss_model.predict(xfit[:, np.newaxis])
+#gauss_model = make_pipeline(GaussianFeatures(20),LinearRegression())
+#gauss_model.fit(x[:, np.newaxis], y)
+#yfit = gauss_model.predict(xfit[:, np.newaxis])
 
 
 # Load HTML data
@@ -80,16 +80,17 @@ linear_model = LinearRegression(fit_intercept=True)
 linear_model.fit(X_train, y_train)
 y_pred_linear = linear_model.predict(X_test)
 
+
 # Ridge Regression
 #ridge_model = Ridge(alpha=1.0)  # You can experiment with different alpha values
-ridge_model = make_pipeline(GaussianFeatures(30), Ridge(alpha=0.1))
-ridge_model.fit(X_train, y_train)
+ridge_model = make_pipeline(GaussianFeatures(20), Ridge(alpha=0.1))
+ridge_model.fit(X_train, y_train, X_test)
 y_pred_ridge = ridge_model.predict(X_test)
 
 # Lasso Regression
 #lasso_model = Lasso(alpha=1.0)  # You can experiment with different alpha values
-lasso_model = make_pipeline(GaussianFeatures(30), Lasso(alpha=0.001))
-lasso_model.fit(X_train, y_train)
+lasso_model = make_pipeline(GaussianFeatures(20), Lasso(alpha=0.1))
+lasso_model.fit(X_train, y_train, X_test)
 y_pred_lasso = lasso_model.predict(X_test)
 
 # Evaluate Linear Regression
@@ -137,6 +138,11 @@ plt.xlabel('Actual CA')
 plt.ylabel('Predicted CA')
 plt.legend()
 plt.show()
+
+
+print(y_pred_lasso)
+print(y_pred_ridge)
+
 
 # Save the models for experimentation
 joblib.dump(linear_model, r'data\models\linear_regression.joblib')
