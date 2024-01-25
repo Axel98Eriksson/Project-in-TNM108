@@ -3,8 +3,8 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 
-data = pd.read_html(r'data\season0\strikers.html', header=0, encoding='utf-8', keep_default_na=False)
-v0 = joblib.load(r'data\models\lasso_regression.joblib')
+data = pd.read_html(r'data\season0\AM.html', header=0, encoding='utf-8', keep_default_na=False)
+v0 = joblib.load(r'data\models\sampdoria-s1.joblib')
 data = data[0]
 
 player_names = data['Name']
@@ -43,8 +43,8 @@ result['Actual CA'] = CA
 result['CA diff'] = abs(result['Actual CA']-result['CA'])
 
 
-result_sorted = result.sort_values(by='Actual CA', ascending=False)
+result_sorted = result.sort_values(by='CA', ascending=False)
 
 # Display the top 5 rows
-top_targets = result_sorted.head(100)
+top_targets = result_sorted.head(5)
 print(top_targets)

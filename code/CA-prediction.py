@@ -36,7 +36,7 @@ class GaussianFeatures(BaseEstimator, TransformerMixin):
 
 
 # Load HTML data
-data = pd.read_html(r'data\train\strikers.html', header=0, encoding='utf-8', keep_default_na=False)
+data = pd.read_html(r'data\train\sampdoria-s1.html', header=0, encoding='utf-8', keep_default_na=False)
 
 # Assuming the first table in the HTML file is the one you want to use
 # If there are multiple tables, you may need to inspect and select the correct one
@@ -71,27 +71,45 @@ y = data['CA']
 X = data.drop('CA', axis=1)
 
 scaler = StandardScaler()
+print(X)
 data_scaled = scaler.fit_transform(X)
-
 X_train, X_test, y_train, y_test = train_test_split(data_scaled, y, test_size=0.75, random_state=42)
+
+# Linear Regression
+#linear_model = LinearRegression(fit_intercept=True)
+#linear_model.fit(X_train, y_train)
+#y_pred_linear = linear_model.predict(X_test)
+
+
+# Ridge Regression
+#ridge_model = Ridge(alpha=1.0)  # You can experiment with different alpha values
+#ridge_model = make_pipeline(GaussianFeatures(20), Ridge(alpha=0.1))
+#ridge_model.fit(X_train, y_train)
+#y_pred_ridge = ridge_model.predict(X_test)
+
+# Lasso Regression
+#lasso_model = Lasso(alpha=1.0)  # You can experiment with different alpha values
+#lasso_model = make_pipeline(GaussianFeatures(20), Lasso(alpha=0.1))
+#lasso_model.fit(X_train, y_train)
+#y_pred_lasso = lasso_model.predict(X_test)
+
 
 # Linear Regression
 linear_model = LinearRegression(fit_intercept=True)
 linear_model.fit(X_train, y_train)
 y_pred_linear = linear_model.predict(X_test)
 
-
 # Ridge Regression
-#ridge_model = Ridge(alpha=1.0)  # You can experiment with different alpha values
-ridge_model = make_pipeline(GaussianFeatures(20), Ridge(alpha=0.1))
-ridge_model.fit(X_train, y_train, X_test)
+ridge_model = Ridge(alpha=0.1)
+ridge_model.fit(X_train, y_train)
 y_pred_ridge = ridge_model.predict(X_test)
 
 # Lasso Regression
-#lasso_model = Lasso(alpha=1.0)  # You can experiment with different alpha values
-lasso_model = make_pipeline(GaussianFeatures(20), Lasso(alpha=0.1))
-lasso_model.fit(X_train, y_train, X_test)
+lasso_model = Lasso(alpha=0.1)
+lasso_model.fit(X_train, y_train)
 y_pred_lasso = lasso_model.predict(X_test)
+
+
 
 # Evaluate Linear Regression
 mse_linear = mean_squared_error(y_test, y_pred_linear)
@@ -139,12 +157,7 @@ plt.ylabel('Predicted CA')
 plt.legend()
 plt.show()
 
-
-print(y_pred_lasso)
-print(y_pred_ridge)
-
-
 # Save the models for experimentation
-joblib.dump(linear_model, r'data\models\linear_regression.joblib')
-joblib.dump(ridge_model, r'data\models\ridge_regression.joblib')
-joblib.dump(lasso_model, r'data\models\lasso_regression.joblib')
+joblib.dump(linear_model, r'data\models\sampdoria-s1.joblib')
+#joblib.dump(ridge_model, r'data\models\ridge_regression.joblib')
+#joblib.dump(lasso_model, r'data\models\lasso_regression.joblib')
