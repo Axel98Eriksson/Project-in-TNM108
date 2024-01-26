@@ -158,6 +158,6 @@ plt.legend()
 plt.show()
 
 # Save the models for experimentation
-joblib.dump(linear_model, r'data\models\sampdoria-s1.joblib')
+#joblib.dump(linear_model, r'data\models\sampdoria-s1.joblib')
 #joblib.dump(ridge_model, r'data\models\ridge_regression.joblib')
 #joblib.dump(lasso_model, r'data\models\lasso_regression.joblib')

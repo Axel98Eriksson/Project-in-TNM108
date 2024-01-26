@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 
-data = pd.read_html(r'data\season0\AM.html', header=0, encoding='utf-8', keep_default_na=False)
+data = pd.read_html(r'data\season3\Striker-Loan.html', header=0, encoding='utf-8', keep_default_na=False)
 v0 = joblib.load(r'data\models\sampdoria-s1.joblib')
 data = data[0]
 
