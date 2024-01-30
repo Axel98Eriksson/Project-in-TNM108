@@ -3,7 +3,7 @@ import pandas as pd
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import LabelEncoder
 
-data = pd.read_html(r'data\season3\Striker-Loan.html', header=0, encoding='utf-8', keep_default_na=False)
+data = pd.read_html(r'data\season4\GK.html', header=0, encoding='utf-8', keep_default_na=False)
 v0 = joblib.load(r'data\models\sampdoria-s1.joblib')
 data = data[0]
 
@@ -48,3 +48,15 @@ result_sorted = result.sort_values(by='CA', ascending=False)
 # Display the top 5 rows
 top_targets = result_sorted.head(5)
 print(top_targets)
+
+
+#S4
+# Flavius Daniliuc 161.440013        133  28.440013
+#Alessandro Circati  162.908728        134  28.908728
+#Andrei Borza  155.257195        121  34.257195
+#Marco Bertini  153.842875        128  25.842875
+#Theo  158.056192        124  34.056192
+#Adil Aouchiche  159.733716        126  33.733716
+#Yan Couto  156.540944        141  15.540944
+#Lucas Beltrán  162.104786        135  27.104786
+#Nikola Čavlina  173.626357        131  42.626357
